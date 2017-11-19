@@ -27,4 +27,13 @@ describe('JWT', () => {
         const isValid = JWT.verifyToken(testToken, secret);
         Chai.expect(isValid).to.be.true;
     });
+    it('decodeTokenHeaderAndPayload should take the encoded token and return an object with the header and payload properites.', () => {
+        const tokenData = JWT.decodeTokenHeaderAndPayload(testToken);
+        Chai.expect(tokenData.header.typ).to.equal('JWT');
+        Chai.expect(tokenData.header.alg).to.equal('HS512');
+
+        Chai.expect(tokenData.payload.iss).to.equal('mywebsite.com');
+        Chai.expect(tokenData.payload.userID).to.equal('1234567890');
+        Chai.expect(tokenData.payload.accessLevel).to.equal('user');
+    });
 });

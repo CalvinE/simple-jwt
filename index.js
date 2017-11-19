@@ -41,6 +41,16 @@ class JWT {
         return signature === incommingSignature;
     }
 
+    static decodeTokenHeaderAndPayload(token) {
+        const tokenParts = token.split('.');
+        const header = JSON.parse(this._base64StringToUTF8(tokenParts[0]));
+        const payload = JSON.parse(this._base64StringToUTF8(tokenParts[1]));
+        return {
+            header,
+            payload
+        }
+    }
+
     static generateRandomSecret (numRuns = 5) {
         let secret = '';
         for(let i = 0; i < numRuns; i++){
